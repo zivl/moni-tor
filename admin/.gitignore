@@ -1,0 +1,11 @@
+*.swp
+node_modules
+dist
+.DS_Store
+.tmp
+coverage
+.settings
+.idea
+*.log
+workshopSteps.txt
+
