@@ -4,6 +4,7 @@ let webpack = require('webpack');
 let path = require('path');
 const devmode = (process.env.npm_lifecycle_event === 'start');
 const port = 3000;
+const devConfig = require('./devConfig.json');
 
 function getEntrySources(sources) {
 	if (devmode) {
@@ -24,7 +25,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: `http://localhost:${port}/`,
-		filename: devmode ? 'dist/[name].js' : 'app.js',
+		filename: devmode ? 'dist/app.js' : 'app.js',
 	},
 	resolve: {
 		root: [path.resolve('.')],
@@ -34,7 +35,7 @@ module.exports = {
 		hot: true,
 		progress: true,
 		inline: true,
-		debug: true
+		debug: true		
 	},
 	module: {
 		preLoaders: [{
@@ -48,9 +49,15 @@ module.exports = {
 		}, {
 			test: /\.scss$/,
 			loaders: ['style', 'css', 'sass']
+		}, {
+			test: /\.json$/,
+        	loader: 'json-loader'
 		}]
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.DefinePlugin({
+			DEBUG: devmode 
+		})
 	]
 };

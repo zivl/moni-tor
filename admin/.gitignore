@@ -8,4 +8,5 @@ coverage
 .idea
 *.log
 workshopSteps.txt
+devConfig.json
 
