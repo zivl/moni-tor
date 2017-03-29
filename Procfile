@@ -1,0 +1,1 @@
+web: cd admin && node server.js
