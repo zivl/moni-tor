@@ -24,7 +24,7 @@ const mapActionsToProps = (dispatch) => {
 class RegisterModalView extends Component {
 
 	render() {
-		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError} = this.props;
+		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError, show} = this.props;
 		if (showError) {
 			Alert.alert('הרשמה נכשלה', 'נא לבדוק את הפרטים שהכנסת');
 		}
@@ -33,10 +33,12 @@ class RegisterModalView extends Component {
 				<Modal
 					animationType={'slide'}
 					transparent={false}
-					visible={showModal}
-					onRequestClose={() => {alert('Modal has been closed.')}}>
+					visible={show}>
 					<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
-						<Text style={styles.registerLabel}>{'הרשמה'}</Text>
+						<View style={{flex: 1, flexDirection: 'row-reverse'}}>
+							<Text style={styles.registerLabel}>{'מוני'}</Text>
+							<Text style={styles.registerLabelT}>{'תור'}</Text>
+						</View>
 						<TextInput
 							style={styles.textInput}
 							placeholder={'שם מלא'}
@@ -81,10 +83,20 @@ const styles = StyleSheet.create({
 	registerLabel: {
 		fontSize: 60,
 		fontWeight: 'bold',
-		lineHeight: 0.8,
+		marginTop: 50,
+		letterSpacing: 1.5,
+		textAlign: 'right',
+		color: '#1762fd',
+		backgroundColor: 'transparent'
+	},
+	registerLabelT: {
+		fontSize: 60,
+		fontWeight: 'bold',
+		marginTop: 50,
 		letterSpacing: 1.5,
 		textAlign: 'right',
 		color: '#8762fd',
+		backgroundColor: 'transparent'
 	},
 	textInput: {
 		marginTop: 50,
@@ -97,6 +109,7 @@ const styles = StyleSheet.create({
 	buttonWrapper: {
 		marginTop: 20
 	}
+
 
 });
 
