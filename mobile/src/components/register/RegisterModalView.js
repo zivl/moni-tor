@@ -24,8 +24,16 @@ export default class RegisterModalView extends Component {
 							style={styles.textInput}
 							placeholder={'שם מלא'}
 							placeholderTextColor={placeholderTextColor}/>
-						<TextInput style={styles.textInput} placeholder={'תעודת זהות'} placeholderTextColor={placeholderTextColor}/>
-						<TextInput style={styles.textInput} placeholder={'טלפון'} placeholderTextColor={placeholderTextColor}/>
+						<TextInput
+							keyboardType={'numeric'}
+							style={styles.textInput}
+							placeholder={'תעודת זהות'}
+							placeholderTextColor={placeholderTextColor}/>
+						<TextInput
+							keyboardType={'phone-pad'}
+							style={styles.textInput}
+							placeholder={'טלפון'}
+							placeholderTextColor={placeholderTextColor}/>
 						<View>
 							<Button
 								onPress={() => this.setModalVisible(!this.state.modalVisible)}
@@ -50,12 +58,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'space-around',
-		marginTop: 22
+		margin: 22
 	},
 	textInput: {
 		height: 30,
 		borderColor: 'gray',
-		borderWidth: 1
+		borderWidth: 1,
+		padding: 15,
+		textAlign: 'right'
 	}
 
 });
