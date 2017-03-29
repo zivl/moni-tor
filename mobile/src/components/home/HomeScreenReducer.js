@@ -1,6 +1,7 @@
 
 import HomeConstants from './HomeConstants';
-let dummyData = {
+
+let initialData = {
 	user:{
 		id: '123',
 		fullName: 'דונה',
@@ -10,7 +11,7 @@ let dummyData = {
 	gotPushNotification: false
 };
 
-export default (state = dummyData, action) => {
+export default (state = initialData, action) => {
 
 	switch (action.type){
 		case HomeConstants.SEAT_AVAILABILITY: {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
+import {Image, Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import RegisterActions from './RegisterActions';
 
 const mapStateToProps = ({register}) => {
@@ -25,7 +25,7 @@ class RegisterModalView extends Component {
 
 	render() {
 		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError} = this.props;
-		if(showError){
+		if (showError) {
 			Alert.alert('הרשמה נכשלה', 'נא לבדוק את הפרטים שהכנסת');
 		}
 		return (
@@ -36,6 +36,7 @@ class RegisterModalView extends Component {
 					visible={showModal}
 					onRequestClose={() => {alert('Modal has been closed.')}}>
 					<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
+						<Text style={styles.registerLabel}>{'הרשמה'}</Text>
 						<TextInput
 							style={styles.textInput}
 							placeholder={'שם מלא'}
@@ -76,6 +77,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		margin: 22
+	},
+	registerLabel: {
+		fontSize: 60,
+		fontWeight: 'bold',
+		lineHeight: 0.8,
+		letterSpacing: 1.5,
+		textAlign: 'right',
+		color: '#8762fd',
 	},
 	textInput: {
 		marginTop: 50,
