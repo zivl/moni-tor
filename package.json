@@ -1,0 +1,25 @@
+{
+  "name": "moni-tor",
+  "version": "1.0.0",
+  "description": "Pregnancy monitor queue scheduler specially designed for High-Risk Dept. at hospitals",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zivl/moni-tor.git"
+  },
+  "scripts": {
+    "start": "cd admin && node server.js"
+  },
+  "keywords": [
+    "monitor"
+  ],
+  "author": "Ziv Levy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zivl/moni-tor/issues"
+  },
+  "homepage": "https://github.com/zivl/moni-tor#readme",
+  "engines": {
+    "node": "6.10.x",
+    "npm": "3.10.x"
+  }
+}
