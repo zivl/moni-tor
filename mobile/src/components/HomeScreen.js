@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+// import RegisterModelView from './RegisterModalView';
 
 export default class HomeScreen extends Component {
 
@@ -10,16 +11,7 @@ export default class HomeScreen extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.welcome}>
-					Welcome to React Native!
-				</Text>
-				<Text style={styles.instructions}>
-					To get started, edit index.android.js
-				</Text>
-				<Text style={styles.instructions}>
-					Double tap R on your keyboard to reload,{'\n'}
-					Shake or press menu button for dev menu
-				</Text>
+				{/*<RegisterModelView />*/}
 			</View>
 		);
 	}
@@ -41,5 +33,5 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		color: '#333333',
 		marginBottom: 5,
-	},
+	}
 });
