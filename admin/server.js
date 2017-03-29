@@ -47,7 +47,7 @@ app.get('/testInitData', function(request, response){
         requestMonitor({
             id: '3300876' + i + i + i,
             phone: '050777877' + i + i + i,
-            name: 'Pregnant lady ' +i
+            fullName: 'Pregnant lady ' +i
         });
     }
    response.json(queue);
@@ -58,6 +58,14 @@ Get entire queue ordered by who is called next
  */
 app.get('/queue', function(request, response){
    response.json(queue);
+});
+
+/*
+ Return indication whether there is an available chair
+ */
+app.get('/queue/status', function(request, response){
+	let isAvailable = { isAvailable: (queue.length-1 < numberOfMonitors)};
+	response.json(isAvailable);
 });
 
 /*
