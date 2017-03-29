@@ -8,7 +8,7 @@ class DummyComponent extends Component {
 	}
 
 	handleRequest() {
-		RestApiUtil.fetch('/test').then(response => this.setState({response: response.c}));
+		RestApiUtil.fetch('/queue').then(response => this.setState({response: response}));
 	}
 
 	render() {

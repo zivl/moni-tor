@@ -1,9 +1,9 @@
 
 import {combineReducers, createStore} from 'redux';
-import dummyReducer from './components/DummyReducer.js';
+import MonitorAdminReducer from './components/MonitorAdminReducer.js';
 
 export const storeCreator = (initialState) => createStore(combineReducers({
-	dummy: dummyReducer
+	monitorAdmin: MonitorAdminReducer
 }), initialState, window.devToolsExtension ? window.devToolsExtension() : undefined);
 
 
