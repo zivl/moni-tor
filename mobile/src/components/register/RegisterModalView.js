@@ -16,7 +16,7 @@ const mapStateToProps = ({register}) => {
 
 const mapActionsToProps = (dispatch) => {
 	return {
-		onRegisterPress: userData => RegisterActions.registerNewUser(dispatch, {userData}),
+		onRegisterPress: userData =>RegisterActions.registerNewUser(dispatch, {userData}),
 		onInputChange: deltaData => RegisterActions.inputChange(dispatch, {deltaData})
 	}
 };
@@ -33,7 +33,7 @@ class RegisterModalView extends Component {
 				<Modal
 					animationType={'slide'}
 					transparent={false}
-					visible={show}>
+					visible={showModal}>
 					<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
 						<View style={{flex: 1, flexDirection: 'row-reverse'}}>
 							<Text style={styles.registerLabel}>{'מוני'}</Text>
@@ -61,7 +61,7 @@ class RegisterModalView extends Component {
 							onChangeText={phone => onInputChange({phone})}/>
 						<View style={styles.buttonWrapper}>
 							<Button
-								onPress={() => onRegisterPress({id, phone, fullName})}
+								onPress={() => {onRegisterPress({id, phone, fullName});}}
 								title='הרשמה'
 								color={registerButtonColor}/>
 						</View>
