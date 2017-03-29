@@ -16,7 +16,13 @@ export default (state = dummyData, action) => {
 		case HomeConstants.SEAT_AVAILABILITY: {
 			return {
 				...state,
-				isSeatAvailable: action.isAvailable
+				isSeatAvailable: action.isAvailable,
+			}
+		}
+		case HomeConstants.SEAT_RESERVED: {
+			return {
+				...state,
+				hasBeenRegistered: action.hasBeenRegistered
 			}
 		}
 	}
