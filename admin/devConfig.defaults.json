@@ -1,4 +1,4 @@
 {
     "target": "http://powerful-refuge-77458.herokuapp.com",
-    "devProxyTarget": "http://localhost:4000"
+    "devProxyTarget": "http://localhost:5000"
 }

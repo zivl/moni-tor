@@ -4,7 +4,6 @@ let webpack = require('webpack');
 let path = require('path');
 const devmode = (process.env.npm_lifecycle_event === 'start');
 const port = 3000;
-const devConfig = require('./devConfig.json');
 
 function getEntrySources(sources) {
 	if (devmode) {
