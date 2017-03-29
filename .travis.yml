@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- 6
+script: cd admin && npm install
+deploy:
+  app: admin-moni-tor
+  provider: heroku
+  skip_cleanup: true
+  api_key: 
+    secure: 0rt5gcKp76S48Y1p49XWGC1w6Xsld1XiPrSV3w4MfLHW2L5CatAl51dlgugX5j7xYhTnlf/tU0TOEDvCCNSeeds5SYKq0HZ5FZZixc2b59qE5deuK5WrgrCdfAkMGYNVc6UCiCtmPLqKvkdgat11WdYPofAIre3rPT+hS2TWjSwPFr/uOsW+XFdV5UadJtNUu1JCp2lyiVuExaKFucTJY5TOHeZTsl7m6aT/6qMHjUrxPFlm4J3PNSKtTbnjmjNKimuflkHnDe/bdY4zO6Zs5gDz12COXdMReTURaLSC59MWiFzAdBCF6Bdn6bCAwCy/7iQyHXqpf8jLEu3KUmOYm+ZGjau1QTQq36PbqyX64EePEx0tizK86Qr7YHHiXZVKofKh+ifI5Wa64RgcnuMAz0JjG7oscd//j6j+bMp6GQe+yd/QCHSEbszsUFxVSxvxz7clggz7fUEr95LvKevM1qGfESVdR4FOFcKRXpv5LaqRqvqs6ck5yk1CVZTCyEgcr5iVojdaz7gAwG+AHSlx+4HEuIiia8KCprNv/+s1RSZZL+tYiqmeSowI51lhvUmjj5EjPkoHMHCk4H0Fh74tT2KFozCr9Htig+sKypHiNSLE9LtlZ4w0DHZ5x2lvhBWIXZo8H3mdH87KVLRSlANnZQFSs+g9S9x/dxMwsRwXZXU=
+  on:
+    branch: master
