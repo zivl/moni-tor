@@ -4,13 +4,19 @@ import MonitorAdmin from './MonitorAdmin.jsx';
 
 export const mapStateToProps = ({monitorAdmin : {data, patient}}) => {
 	let allowCreateNew = false;
+	let isListEmpty = false;
 	if (patient && patient.id && patient.fullName && patient.phone) {
 		allowCreateNew = true;
 	}
+	if (data && data.length === 0) {
+		isListEmpty = true;
+	}
+
 	return {
 		data,
 		patient,
-		allowCreateNew
+		allowCreateNew,
+		isListEmpty
 	};
 };
 
