@@ -6,6 +6,10 @@
     "type": "git",
     "url": "git+https://github.com/zivl/moni-tor.git"
   },
+  "scripts": {
+    "start": "cd admin && node server.js",
+    "postinstall": "cd admin && npm run build"
+  },
   "keywords": [
     "monitor"
   ],
@@ -17,6 +21,6 @@
   "homepage": "https://github.com/zivl/moni-tor#readme",
   "engines": {
     "node": "6.10.x",
-    "npm": "3.10.10"
+    "npm": "3.10.x"
   }
 }
