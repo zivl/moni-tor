@@ -13,6 +13,7 @@ const registerActions = Object.freeze({
 
     registerNewUser(dispatch, {userData}){
         if(isDataValid(userData)) {
+            debugger;
 			AsyncStorage.setItem('@userData:key', JSON.stringify(userData), error => {
 				console.log("Could not register user. Please try again", error);
 			}).then(() => dispatch({type: registerStatuses.REGISTER, userData}));
