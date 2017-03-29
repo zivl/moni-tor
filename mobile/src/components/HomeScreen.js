@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import RegisterModelView from './register/RegisterModalView';
+import {AsyncStorage} from 'react-native';
 
 export default class HomeScreen extends Component {
 
@@ -8,11 +9,29 @@ export default class HomeScreen extends Component {
 
 	static defaultProps = {};
 
+	state = {
+		isRegistered: null
+	};
+
+	componentDidMount() {
+		this.checkIfRegistered();
+	}
+
+	checkIfRegistered() {
+		AsyncStorage.getItem('@userData:key', (error, result) => {
+			if(error) {
+				console.log("Could not get registered user. Please try again", error);
+			}
+			this.setState({isRegistered: Boolean(result)});
+		});
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
-				<RegisterModelView />
-				<Text>we are here</Text>
+				{this.state.isRegistered != null &&
+					(!this.state.isRegistered ? <RegisterModelView /> : <Text>REGISTERED!!!</Text>)}
+				{/*<Text>we are here</Text>*/}
 			</View>
 		);
 	}
