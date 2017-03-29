@@ -39,6 +39,9 @@ jspm_packages
 # IDEA / JetBrains
 .idea
 
+# Visual Studio Code
+.vscode
+
 # certificates
 *.cer
 *.certSigningRequest
