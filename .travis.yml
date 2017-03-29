@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - 6
-script: cd admin && npm install && npm run build
+script: cd admin && npm install
 deploy:
   app: admin-moni-tor
   provider: heroku
