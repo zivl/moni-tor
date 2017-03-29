@@ -5,6 +5,9 @@ var app = express();
 app.use(bodyParser.json());
 
 var queue = [];
+var notificationTimers = [];
+var numberOfMonitors = 5;
+var notificationTimeoutInMinutes = 5;
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -38,43 +41,49 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-app.get('/test', function(request, response){
-   response.json({a: '1', b:'2', c:'hello world local'})
+app.get('/testInitData', function(request, response){
+    queue = [];
+    for (var i=0;i < (numberOfMonitors+2);i++) {
+        requestMonitor({
+            id: '3300876' + i + i + i,
+            phone: '050777877' + i + i + i,
+            name: 'Pregnant lady ' +i
+        });
+    }
+   response.json(queue);
 });
 
-
+/*
+Get entire queue ordered by who is called next
+ */
 app.get('/queue', function(request, response){
    response.json(queue);
 });
 
-app.get('/queue/:id', function(request, response){
-    let id = request.params.id;
-    response.json(getFromQueueByID(id));
-});
-
+/*
+Add a new user to the end of the queue
+ */
 app.post('/queue', function(request, response) {
-   var newRequest = request.body;
-   if (checkIdInQueue(newRequest.id)) {
-     response.status(405).send({ error: "User already registered." });
-     return; 
-   };
-   newRequest.registrationTime = new Date();
-   queue.push(newRequest);
-   response.json(newRequest);
+	var newRequest = request.body;
+	if (getFromQueueByID(newRequest.id) !== null) {
+		response.status(405).send({ error: "User " + newRequest.id+ " already registered." });
+		return;
+	};
+	requestMonitor(newRequest);
+	response.json(newRequest);
 });
 
-
+/*
+Removes a user from the queue
+ */
 app.delete('/queue/:id', function(request, response){
    let id = request.params.id;
-    for (index in queue) {
-        if (queue[index].id === id) {
-            queue.splice(index,1);
-            break;
-        }
-    }
+   deleteUser(id);
    response.json({});
 });
-
+/*
+Move user a place up in the queue
+ */
 app.put('/queue/up/:id', function(request, response){
    let id = request.params.id;
    for (index in queue) {
@@ -85,13 +94,36 @@ app.put('/queue/up/:id', function(request, response){
              let user = queue[index];
             // remove from queue
              queue.splice(index,1);
-                // add back to queue
+             // add back to queue
             queue.splice(index-1, 0, user);
-            }
+         }
       }
    }
    response.json(queue);
 });
+/*
+Move user to the top of the queue
+ */
+app.put('/queue/top/:id', function(request, response){
+	let id = request.params.id;
+	for (index in queue) {
+		if (queue[index].id === id) {
+			if (index == 0) {
+				break;
+			} else {
+				let user = queue[index];
+				// remove from queue
+				queue.splice(index,1);
+				// add back to queue
+				queue.splice(0, 0, user);
+			}
+		}
+	}
+	response.json(queue);
+});
+/*
+Move user down in queue
+ */
 app.put('/queue/down/:id', function(request, response){
     let id = request.params.id;
     for (index in queue) {
@@ -109,24 +141,77 @@ app.put('/queue/down/:id', function(request, response){
     }
    response.json(queue);
 });
+
 /*
-Notify a specific user to come to the monitor
-*/
-app.put('/queue/notify/:id', function(request, response){
-   let id = request.params.id;
-});
-/*
-Pop from the queue and notify the user
+Get first user that has not been notified from queue queue and notify
 */
 app.put('/queue/notify', function(request, response){
-   let id = request.params.id;
+    // find first user without notification time
+    let user = {};
+    for (index  in queue) {
+        if (queue[index].notificationTime === undefined) {
+            user = queue[index];
+	        notifyUser(user);
+        }
+    }
+    response.json(queue);
 });
+/****************************************************************************
+ * M E T H O D S
+*****************************************************************************/
 
-function notifyUser(user) {
-    // set notification time and start timer
-    // send notification
+/*
+Send a request for a monitor, returns true if available and false if queued
+ */
+function requestMonitor(user) {
+	user.registrationTime = new Date();
+	queue.push(user);
+	if (queue.length-1 < numberOfMonitors) {
+		startTimerUser(user);
+        return true;
+    }
+    return false;
 }
-
+/*
+Removes the user properly, both the timeout of the notification and from the queue
+ */
+function deleteUser(id) {
+	// removing timeout in case we have it
+	if (notificationTimers[id]) {
+		clearTimeout(notificationTimers[id]);
+	    delete notificationTimers[id];
+	}
+	for (index in queue) {
+		if (queue[index].id === id) {
+			queue.splice(index,1);
+			break;
+		}
+	}
+}
+/*
+Starts the timer for the user to get to the monitor
+ */
+function startTimerUser(user) {
+	user.notificationTime = new Date();
+	let timeout  = setTimeout(timeOutDelete, notificationTimeoutInMinutes * 60 * 1000, user.id);
+	notificationTimers[user.id] = timeout;
+}
+/*
+// TODO - use for push notification
+ */
+function notifyUser(user) {
+    startTimerUser(user);
+    console.log('notifying user ' + JSON.stringify(user) + '...')
+}
+/*
+Callback from the timeout
+ */
+function timeOutDelete(id) {
+    deleteUser(id);
+}
+/*
+Get the user from the queue by ID
+ */
 function getFromQueueByID(id) {
    for (index in queue) {
       if (queue[index].id === id) {
@@ -134,13 +219,4 @@ function getFromQueueByID(id) {
       }
    }
    return null;
-}
-
-function checkIdInQueue(id) {
-   for (index in queue) {
-      if (queue[index].id === id) {         
-         return true;
-      }
-   }
-   return false;
 }
