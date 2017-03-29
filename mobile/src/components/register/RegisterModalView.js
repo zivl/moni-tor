@@ -1,51 +1,69 @@
 import React, {Component} from 'react';
-import {Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button} from 'react-native';
+import {connect} from 'react-redux';
+import {Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
+import RegisterActions from './RegisterActions';
 
-export default class RegisterModalView extends Component {
+const mapStateToProps = ({register}) => {
 
-	state = {
-		modalVisible: true,
-	};
-
-	setModalVisible(visible) {
-		this.setState({modalVisible: visible});
+	return {
+		id: register.id,
+		fullName: register.fullName,
+		phone: register.phone,
+		showModal: register.showModal,
+		showError: register.showError
 	}
+};
+
+const mapActionsToProps = (dispatch) => {
+	return {
+		onRegisterPress: userData => RegisterActions.registerNewUser(dispatch, {userData}),
+		onInputChange: deltaData => RegisterActions.inputChange(dispatch, {deltaData})
+	}
+};
+
+class RegisterModalView extends Component {
 
 	render() {
+		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError} = this.props;
+		if(showError){
+			Alert.alert('הרשמה נכשלה', 'נא לבדוק את הפרטים שהכנסת');
+		}
 		return (
 			<View style={{marginTop: 22}}>
 				<Modal
 					animationType={'slide'}
 					transparent={false}
-					visible={this.state.modalVisible}
+					visible={showModal}
 					onRequestClose={() => {alert('Modal has been closed.')}}>
-					<View style={styles.modalContent}>
+					<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
 						<TextInput
 							style={styles.textInput}
 							placeholder={'שם מלא'}
-							placeholderTextColor={placeholderTextColor}/>
+							placeholderTextColor={placeholderTextColor}
+							value={fullName}
+							onChangeText={fullName => onInputChange({fullName})}/>
 						<TextInput
 							keyboardType={'numeric'}
 							style={styles.textInput}
 							placeholder={'תעודת זהות'}
-							placeholderTextColor={placeholderTextColor}/>
+							placeholderTextColor={placeholderTextColor}
+							value={id}
+							onChangeText={id => onInputChange({id})}/>
 						<TextInput
 							keyboardType={'phone-pad'}
 							style={styles.textInput}
 							placeholder={'טלפון'}
-							placeholderTextColor={placeholderTextColor}/>
-						<View>
+							placeholderTextColor={placeholderTextColor}
+							value={phone}
+							onChangeText={phone => onInputChange({phone})}/>
+						<View style={styles.buttonWrapper}>
 							<Button
-								onPress={() => this.setModalVisible(!this.state.modalVisible)}
+								onPress={() => onRegisterPress({id, phone, fullName})}
 								title='הרשמה'
 								color={registerButtonColor}/>
 						</View>
-					</View>
+					</ScrollView>
 				</Modal>
-
-				<TouchableHighlight onPress={() => this.setModalVisible(true)}>
-					<Text>Show Modal</Text>
-				</TouchableHighlight>
 			</View>
 		);
 	}
@@ -57,15 +75,20 @@ const styles = StyleSheet.create({
 	modalContent: {
 		flex: 1,
 		flexDirection: 'column',
-		justifyContent: 'space-around',
 		margin: 22
 	},
 	textInput: {
-		height: 30,
+		marginTop: 50,
+		height: 40,
 		borderColor: 'gray',
 		borderWidth: 1,
-		padding: 15,
+		padding: 10,
 		textAlign: 'right'
+	},
+	buttonWrapper: {
+		marginTop: 20
 	}
 
 });
+
+export default connect(mapStateToProps, mapActionsToProps)(RegisterModalView);

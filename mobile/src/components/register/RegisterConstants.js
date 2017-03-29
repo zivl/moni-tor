@@ -4,5 +4,10 @@
 
 
 export const registerStatuses = {
-    REGISTER: 'Register'
+    REGISTER: 'REGISTER',
+	REGISTER_FAILED: 'REGISTER_FAILED'
+};
+
+export const registerActionType = {
+    INPUT_CHANGE: 'INPUT_CHANGE'
 };
