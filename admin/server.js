@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
+var sendNotification = require('./fireBase/notification.js');
+
 var app = express();
 app.use(bodyParser.json());
 
@@ -29,6 +31,11 @@ app.use(function (req, res, next) {
 
 
 app.use('/dist', express.static(__dirname + '/dist'));
+
+app.post('/notify', function(request, response) {
+    sendNotification(request.body.token);
+    response.json({a: 'hello'});
+});
 
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/index.html');
