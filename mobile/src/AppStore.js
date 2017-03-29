@@ -1,6 +1,6 @@
 
 import {combineReducers, createStore} from 'redux';
-import HomeScreenReducer from './components/HomeScreenReducer';
+import HomeScreenReducer from './components/home/HomeScreenReducer';
 import registerReducer from './components/register/RegisterReducer';
 
 export const storeCreator = (initialState) => createStore(combineReducers({

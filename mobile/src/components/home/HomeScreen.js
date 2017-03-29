@@ -5,6 +5,7 @@ import RegisterModelView from '../register/RegisterModalView';
 import HomeActions from './HomeActions';
 import Notifications from '../notifications/Notifications';
 
+
 const mapStateToProps = ({home}) => {
 
     return {

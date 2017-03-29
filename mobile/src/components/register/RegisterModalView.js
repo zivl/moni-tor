@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
+import {Image, Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import RegisterActions from './RegisterActions';
 
 const mapStateToProps = ({register}) => {
@@ -24,8 +24,8 @@ const mapActionsToProps = (dispatch) => {
 class RegisterModalView extends Component {
 
 	render() {
-		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError} = this.props;
-		if(showError){
+		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError, show} = this.props;
+		if (showError) {
 			Alert.alert('הרשמה נכשלה', 'נא לבדוק את הפרטים שהכנסת');
 		}
 		return (
@@ -33,9 +33,12 @@ class RegisterModalView extends Component {
 				<Modal
 					animationType={'slide'}
 					transparent={false}
-					visible={showModal}
-					onRequestClose={() => {alert('Modal has been closed.')}}>
+					visible={show}>
 					<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
+						<View style={{flex: 1, flexDirection: 'row-reverse'}}>
+							<Text style={styles.registerLabel}>{'מוני'}</Text>
+							<Text style={styles.registerLabelT}>{'תור'}</Text>
+						</View>
 						<TextInput
 							style={styles.textInput}
 							placeholder={'שם מלא'}
@@ -77,6 +80,24 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		margin: 22
 	},
+	registerLabel: {
+		fontSize: 60,
+		fontWeight: 'bold',
+		marginTop: 50,
+		letterSpacing: 1.5,
+		textAlign: 'right',
+		color: '#1762fd',
+		backgroundColor: 'transparent'
+	},
+	registerLabelT: {
+		fontSize: 60,
+		fontWeight: 'bold',
+		marginTop: 50,
+		letterSpacing: 1.5,
+		textAlign: 'right',
+		color: '#8762fd',
+		backgroundColor: 'transparent'
+	},
 	textInput: {
 		marginTop: 50,
 		height: 40,
@@ -88,6 +109,7 @@ const styles = StyleSheet.create({
 	buttonWrapper: {
 		marginTop: 20
 	}
+
 
 });
 

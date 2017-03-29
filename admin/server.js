@@ -190,6 +190,7 @@ app.put('/queue/notify', function(request, response){
         if (queue[index].notificationTime === undefined) {
             user = queue[index];
 	        notifyUser(user);
+	        break;
         }
     }
     response.json(queue);
