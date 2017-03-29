@@ -42,7 +42,6 @@ app.listen(app.get('port'), function() {
 });
 
 app.get('/testInitData', function(request, response){
-    queue = [];
     for (var i=0;i < (numberOfMonitors+2);i++) {
         requestMonitor({
             id: '3300876' + i + i + i,
@@ -80,7 +79,32 @@ app.post('/queue', function(request, response) {
 	requestMonitor(newRequest);
 	response.json(newRequest);
 });
+/*
+ Clears the entire queue and all timers.
+ */
+app.delete('/queue', function(request, response){
+	queue = [];
+	for (id in notificationTimers) {
+		clearTimeout(notificationTimers[id]);
+		delete notificationTimers[id];
+	}
+	notificationTimers = [];
+	response.json(queue);
+});
 
+/*
+Update the queue configuration. Set the numberOfMonitors and notificationTimeoutInMinutes parameters
+ */
+app.put('/queue/config', function(request, response){
+	let configData = request.body;
+	if(configData.numberOfMonitors !== undefined) {
+		numberOfMonitors = configData.numberOfMonitors;
+	}
+	if(configData.notificationTimeoutInMinutes !== undefined) {
+		notificationTimeoutInMinutes = configData.notificationTimeoutInMinutes;
+	}
+	response.json({});
+});
 /*
 Removes a user from the queue
  */
