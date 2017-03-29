@@ -5,7 +5,7 @@ let initialValue = {
 	id: '',
 	phone: '',
 	fullName: '',
-	showModal: true,
+	showModal: false,
 	showError: false
 };
 

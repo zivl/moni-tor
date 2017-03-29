@@ -1,0 +1,8 @@
+
+export default {
+
+	PUSH_RECEIVED: 'PUSH_RECEIVED',
+
+	SEAT_AVAILABILITY: 'SEAT_AVAILABILITY'
+}
+
