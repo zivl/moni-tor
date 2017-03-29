@@ -18,9 +18,9 @@ function sendNotification(token) {
     // on how to define a message payload.
     var payload = {
     data: {
-        title: "TITLE",
-        msg: "MESSAGE",
-        sub_text: "run run run"
+        title: "MONI-TOR",
+        msg: "It's time to go to monitor",
+        sub_text: ""
     }
     };
 

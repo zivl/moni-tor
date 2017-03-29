@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var sendNotification = require('./fireBase/notification.js');
 
-var sendNotification = require('./fireBase/notification.js');
 
 var app = express();
 app.use(bodyParser.json());
@@ -85,6 +84,7 @@ Add a new user to the end of the queue
  */
 app.post('/queue', function(request, response) {
 	var newRequest = request.body;
+    console.log(newRequest);
 	if (getFromQueueByID(newRequest.id) !== null) {
 		response.status(405).send({ error: "User " + newRequest.id+ " already registered." });
 		return;
@@ -248,6 +248,7 @@ function startTimerUser(user) {
  */
 function notifyUser(user) {
     startTimerUser(user);
+    sendNotification(user.token);
     console.log('notifying user ' + JSON.stringify(user) + '...')
 }
 /*
