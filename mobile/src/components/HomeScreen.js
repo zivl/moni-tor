@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-// import RegisterModelView from './RegisterModalView';
+import RegisterModelView from './RegisterModalView';
 
 export default class HomeScreen extends Component {
 
@@ -11,7 +11,7 @@ export default class HomeScreen extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				{/*<RegisterModelView />*/}
+				<RegisterModelView />
 			</View>
 		);
 	}
