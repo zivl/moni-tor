@@ -7,7 +7,9 @@ import {registerStatuses} from './RegisterConstants.js';
 const registerAction = Object.freeze({
 
     registerNewUser(dispatch, {userData}){
-
-        dispatch({type: registerStatuses.REGISTER, userData})
+        AsyncStorage.setItem('@userData:key', userData, error => {
+            console.log("Could not register user. Please try again", error);
+        }).then(() => dispatch({type: registerStatuses.REGISTER, userData}));
+        
     }
 })
