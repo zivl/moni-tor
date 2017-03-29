@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "473993804163",
+    "firebase_url": "https://moni-tor.firebaseio.com",
+    "project_id": "moni-tor",
+    "storage_bucket": "moni-tor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473993804163:android:1fb0623114da33be",
+        "android_client_info": {
+          "package_name": "com.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473993804163-44uefdgv3o464t4626vm4qj0sudg05uq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfMHu8ClNnRufFck9lgot565uQSow2PLM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
