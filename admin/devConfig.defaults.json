@@ -1,4 +1,4 @@
 {
-    "target": "http://powerful-refuge-77458.herokuapp.com",
+    "target": "https://admin-moni-tor.herokuapp.com/",
     "devProxyTarget": "http://localhost:5000"
 }

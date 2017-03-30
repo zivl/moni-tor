@@ -58,12 +58,12 @@ class AddPatient extends Component  {
 	render(){
 		let {fullName, id, phone} = this.props;
 		return (<div className='modal'>
-			<div className='field'><label>שם המטופלת:</label><input type='text' id='fullName' name='fullName' value={fullName} onChange={(e) => this.props.updatePatientData({fullName: e.target.value})}/></div>
-			<div className='field'><label>ת.ז.:</label><input type='text' id='name' name='id' value={id}  onChange={(e) => this.props.updatePatientData({id: e.target.value})} /></div>
-			<div className='field'><label>מספר טלפון:</label><input type='text' id='phone' name='phone' value={phone}  onChange={(e) => this.props.updatePatientData({phone: e.target.value})}/></div>
+			<div className='field'><label>שם המטופלת</label><input type='text' id='fullName' name='fullName' value={fullName} onChange={(e) => this.props.updatePatientData({fullName: e.target.value})}/></div>
+			<div className='field'><label>ת.ז.</label><input type='text' id='name' name='id' value={id}  onChange={(e) => this.props.updatePatientData({id: e.target.value})} /></div>
+			<div className='field'><label>מספר טלפון</label><input type='text' id='phone' name='phone' value={phone}  onChange={(e) => this.props.updatePatientData({phone: e.target.value})}/></div>
 			<div className='main-actions'>
-				<button onClick={()=>this.props.addPatient({fullName, id, phone})} disabled={!this.props.addEnabled}>אישור</button>
-				<button onClick={this.props.closeModal} >ביטול</button>
+				<button className='modal-button cancel' onClick={this.props.closeModal} >ביטול</button>
+				<button className='modal-button' onClick={()=>this.props.addPatient({fullName, id, phone})} disabled={!this.props.addEnabled}>אישור</button>
 			</div>
 		</div>);
 	}
