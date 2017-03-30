@@ -26,6 +26,9 @@ function sendNotification(token) {
 
     // Send a message to the device corresponding to the provided
     // registration token.
+    if (typeof token === 'undefined' ) {
+        return false;
+    }
     admin.messaging().sendToDevice(token, payload)
     .then(function(response) {
         // See the MessagingDevicesResponse reference documentation for

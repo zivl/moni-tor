@@ -12,9 +12,9 @@ var app = express();
 app.use(bodyParser.json());
 
 var queue = [];
-var notificationTimers = [];
+//var notificationTimers = [];
 var numberOfMonitors = 5;
-var notificationTimeoutInMinutes = 5;
+//var notificationTimeoutInMinutes = 5;
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -102,11 +102,11 @@ app.post('/queue', function(request, response) {
  */
 app.delete('/queue', function(request, response){
 	queue = [];
-	for (id in notificationTimers) {
-		clearTimeout(notificationTimers[id]);
-		delete notificationTimers[id];
-	}
-	notificationTimers = [];
+	//for (id in notificationTimers) {
+	//	clearTimeout(notificationTimers[id]);
+	//	delete notificationTimers[id];
+	//}
+	//notificationTimers = [];
 	response.json(queue);
 });
 
@@ -118,9 +118,9 @@ app.put('/queue/config', function(request, response){
 	if(configData.numberOfMonitors !== undefined) {
 		numberOfMonitors = configData.numberOfMonitors;
 	}
-	if(configData.notificationTimeoutInMinutes !== undefined) {
+	/*if(configData.notificationTimeoutInMinutes !== undefined) {
 		notificationTimeoutInMinutes = configData.notificationTimeoutInMinutes;
-	}
+	}*/
 	response.json({});
 });
 /*
@@ -217,10 +217,10 @@ Send a request for a monitor, returns true if available and false if queued
 function requestMonitor(user) {
 	user.registrationTime = new Date();
 	queue.push(user);
-	if (queue.length-1 < numberOfMonitors) {
+	/*if (queue.length-1 < numberOfMonitors) {
 		startTimerUser(user);
         return true;
-    }
+    }*/
     return false;
 }
 /*
@@ -228,10 +228,10 @@ Removes the user properly, both the timeout of the notification and from the que
  */
 function deleteUser(id) {
 	// removing timeout in case we have it
-	if (notificationTimers[id]) {
-		clearTimeout(notificationTimers[id]);
-	    delete notificationTimers[id];
-	}
+	//if (notificationTimers[id]) {
+	//	clearTimeout(notificationTimers[id]);
+	//    delete notificationTimers[id];
+	//}
 	for (index in queue) {
 		if (queue[index].id === id) {
 			queue.splice(index,1);
@@ -245,8 +245,8 @@ Starts the timer for the user to get to the monitor. sets the end time on the us
 function startTimerUser(user) {
 	let endTime = new Date();
 	user.notificationTime = new Date(endTime.setMinutes(endTime.getMinutes() + 5));
-	let timeout  = setTimeout(timeOutDelete, notificationTimeoutInMinutes * 60 * 1000, user.id);
-	notificationTimers[user.id] = timeout;
+	//let timeout  = setTimeout(timeOutDelete, notificationTimeoutInMinutes * 60 * 1000, user.id);
+	//notificationTimers[user.id] = timeout;
 }
 /*
 // TODO - use for push notification

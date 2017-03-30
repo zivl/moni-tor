@@ -3,7 +3,11 @@ export default (state = {}, action) => {
 		case 'QUEUE_DATA_LOADED':
 			return {
 				...state,
-				data: [...action.data],
+				data: [...action.data]
+			};
+		case 'CLEAR_PATIENT_DATA':
+			return {
+				...state,
 				patient: {
 					fullName: '',
 					id: '',

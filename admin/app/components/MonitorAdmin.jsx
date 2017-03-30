@@ -34,19 +34,18 @@ class MonitorAdmin extends Component {
 
 	closeModal() {
 		this.setState({showModal: false});
-		interval = setInterval(this.props.fetchQueue,10000);
 	}
 
 	openModal() {
+		this.props.clearPatientData();
 		this.setState({showModal: true});
-		clearInterval(interval);
 	}
 
 	render() {
 		return (
 			<div>
 				<div className='content'>
-					<div className='logo'>MONITOR</div>
+					<div className='logo'></div>
 					<div className='main-actions'>
 						<button className='add-patient-button' onClick={() => this.openModal()} >+</button>
 						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>&#128276;&nbsp;&nbsp; זמן את הבאה בתור</button>
@@ -79,7 +78,7 @@ class AddPatient extends Component  {
 	}
 }
 const ListItem = (props) => {
-	const {itemData : {fullName, id, phone, registrationTime, notificationTime}} = props;
+	const {itemData : {fullName, id, phone, registrationTime, notificationTime, token}} = props;
 	let regDate = new Date(registrationTime);
 	var diff =  calcTimeDiff(regDate);
 	let timeClass = '';
@@ -93,7 +92,8 @@ const ListItem = (props) => {
 		<div className='big-col align'>{id}</div>
 		<div className='big-col phone-number align'>{phone}</div>
 		<div className='big-col align'>{new Date(registrationTime).toTimeString().substring(0,5)}</div>
-		<div className={timeClass + ' small-col align'}>{notificationTime ? 'הזמנה נשלחה' : 'ממתינה'}</div>
+		{token && <div className={timeClass + ' small-col align'}>{notificationTime ? 'הזמנה נשלחה' : 'ממתינה'}</div>}
+		{!token && <div className={timeClass + ' small-col align'}>{notificationTime ? 'נא ליצור קשר' : 'ממתינה'}</div>}
 		<div className='huge-col flex-col'>
 			<div className='action remove'  onClick={()=>props.removeFromQueue(id)} >X הסרה מהרשימה</div>
 			{notificationTime ?  <div className='action arrived'  onClick={()=>props.removeFromQueue(id)} > &#10003; המטופלת הגיעה</div> : <div className='action top' onClick={()=>props.moveTopQueue(id)}>! הקפצה לראש הרשימה</div> }
