@@ -147,8 +147,28 @@ body {
 	label {
 	  font-size: 1rem;
 	}
-	margin-top: 1.2rem;
+	margin-top: 2rem;
 	margin-bottom: 0.4rem;
+  }
+}
+
+.modal-button {
+  height: 30px;
+  width: 80px;
+  background-color: #8762fd;
+  box-shadow: 2.5px 4.3px 21px 0 rgba(0, 0, 0, 0.15);
+  color: white;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-color: transparent;
+  &.cancel {
+	background-color: #959595;
+  }
+  &:disabled {
+	background-color: #dadada;
+	color: #cccccc;
+	box-shadow: none;
   }
 }
 
