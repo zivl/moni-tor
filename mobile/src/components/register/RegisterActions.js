@@ -4,6 +4,8 @@
 
 import {AsyncStorage} from 'react-native';
 import {registerStatuses, registerActionType} from './RegisterConstants.js';
+import {baseUrl} from '../../config/Config'
+const contentType = 'application/json';
 
 function isDataValid(user){
     return user.id && user.phone && user.fullName;
@@ -12,10 +14,23 @@ function isDataValid(user){
 const registerActions = Object.freeze({
 
     async registerNewUser(dispatch, {userData}){
+		
         if(isDataValid(userData)) {
         	try {
+				
 				await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
-				dispatch({type: registerStatuses.REGISTER, userData});
+				fetch(baseUrl + '/queue', {
+					method: 'post',
+					headers: {
+						'Accept': contentType,
+						'Content-Type': contentType
+					},
+					body: JSON.stringify(userData)
+				}).then(()=>{
+					dispatch({type: registerStatuses.REGISTER, userData});
+				})
+
+				
 			}
 			catch (e){
 				console.log("Could not register user. Please try again", e);
