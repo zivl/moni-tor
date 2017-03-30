@@ -1,4 +1,4 @@
 {
-    "target": "https://admin-moni-tor.herokuapp.com/",
+    "target": "https://admin-moni-tor.herokuapp.com",
     "devProxyTarget": "http://localhost:5000"
 }
