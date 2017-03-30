@@ -40,7 +40,7 @@ class HomeScreen extends Component {
 			<View style={styles.container}>
 				<Notifications />
 				<Image style={styles.bg} source={require('../register/bg.jpg')} />
-				<RegisterModelView show={true}/>
+				<RegisterModelView/>
 				<View>
 					<Text>{`היי ${fullName}`}</Text>
 					<Text>{`כרגע ${availability} מקומות פנויים`}</Text>

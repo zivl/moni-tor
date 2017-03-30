@@ -1,6 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var smsClient = require('twilio')(
+	'ACd787fd89ceb7d642dd3b739cb72f935c',
+	'31d6775f34be5b66790c87687efa4270'
+);
+
 var sendNotification = require('./fireBase/notification.js');
+
 
 var app = express();
 app.use(bodyParser.json());
@@ -33,6 +39,11 @@ app.use(function (req, res, next) {
 
 
 app.use('/dist', express.static(__dirname + '/dist'));
+
+app.post('/notify', function(request, response) {
+    sendNotification(request.body.token);
+    response.json({a: 'hello'});
+});
 
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/index.html');
@@ -78,6 +89,7 @@ Add a new user to the end of the queue
  */
 app.post('/queue', function(request, response) {
 	var newRequest = request.body;
+    console.log(newRequest);
 	if (getFromQueueByID(newRequest.id) !== null) {
 		response.status(405).send({ error: "User " + newRequest.id+ " already registered." });
 		return;
@@ -240,8 +252,24 @@ function startTimerUser(user) {
 // TODO - use for push notification
  */
 function notifyUser(user) {
-    startTimerUser(user);
-    console.log('notifying user ' + JSON.stringify(user) + '...')
+  startTimerUser(user);
+  sendNotification(user.token);
+  sendSms(user.phone);
+}
+/*
+Send SMS to number
+ */
+function sendSms(phone) {
+	let intlPhoneNo = "+972" + phone.substring(1);
+	smsClient.messages.create({
+		from: '+18058521995',
+		to: intlPhoneNo,
+		body: "Moni-tor. It's your turn!"
+	}, function(err, message) {
+		if(err) {
+			console.error(err.message);
+		}
+	});
 }
 /*
 Callback from the timeout
