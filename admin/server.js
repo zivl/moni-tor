@@ -1,5 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var smsClient = require('twilio')(
+	'ACd787fd89ceb7d642dd3b739cb72f935c',
+	'31d6775f34be5b66790c87687efa4270'
+);
+
 var sendNotification = require('./fireBase/notification.js');
 
 var app = express();
@@ -241,7 +246,23 @@ function startTimerUser(user) {
  */
 function notifyUser(user) {
     startTimerUser(user);
-    console.log('notifying user ' + JSON.stringify(user) + '...')
+    console.log('notifying user ' + JSON.stringify(user) + '...');
+	sendSms(user.phone);
+}
+/*
+Send SMS to number
+ */
+function sendSms(phone) {
+	let intlPhoneNo = "+972" + phone.substring(1);
+	smsClient.messages.create({
+		from: '+18058521995',
+		to: intlPhoneNo,
+		body: "Moni-tor. It's your turn!"
+	}, function(err, message) {
+		if(err) {
+			console.error(err.message);
+		}
+	});
 }
 /*
 Callback from the timeout
