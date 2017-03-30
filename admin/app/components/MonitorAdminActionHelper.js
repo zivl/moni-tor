@@ -40,6 +40,9 @@ const MonitorAdminActionHelper = {
 	updateNewPatientData(dispatch, data) {
 		dispatch ({type: 'PATIENT_DATA_CHANGED', data});
 	},
+	clearPatientData(dispatch) {
+		dispatch ({type: 'CLEAR_PATIENT_DATA'});
+	},
 	addPatientAction(dispatch, data){
 		addPatient(data).then(fetchQueue).then(response => {
 			dispatch ({type: 'QUEUE_DATA_LOADED', data: response});

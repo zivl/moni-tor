@@ -28,6 +28,7 @@ export const mapActionsToProps = (dispatch) => {
 		moveTopQueue: (id) => MonitorAdminActionHelper.moveTopQueueAction(dispatch, id),
 		updateNewPatientData: (data) => MonitorAdminActionHelper.updateNewPatientData(dispatch, data),
 		addPatient: (data) => MonitorAdminActionHelper.addPatientAction(dispatch, data),
+		clearPatientData: (data) => MonitorAdminActionHelper.clearPatientData(dispatch),
 	};
 };
 
