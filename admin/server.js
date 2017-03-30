@@ -7,6 +7,7 @@ var smsClient = require('twilio')(
 
 var sendNotification = require('./fireBase/notification.js');
 
+
 var app = express();
 app.use(bodyParser.json());
 
@@ -38,6 +39,11 @@ app.use(function (req, res, next) {
 
 
 app.use('/dist', express.static(__dirname + '/dist'));
+
+app.post('/notify', function(request, response) {
+    sendNotification(request.body.token);
+    response.json({a: 'hello'});
+});
 
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/index.html');
@@ -83,6 +89,7 @@ Add a new user to the end of the queue
  */
 app.post('/queue', function(request, response) {
 	var newRequest = request.body;
+    console.log(newRequest);
 	if (getFromQueueByID(newRequest.id) !== null) {
 		response.status(405).send({ error: "User " + newRequest.id+ " already registered." });
 		return;
@@ -245,9 +252,9 @@ function startTimerUser(user) {
 // TODO - use for push notification
  */
 function notifyUser(user) {
-    startTimerUser(user);
-    console.log('notifying user ' + JSON.stringify(user) + '...');
-	sendSms(user.phone);
+  startTimerUser(user);
+  sendNotification(user.token);
+  sendSms(user.phone);
 }
 /*
 Send SMS to number

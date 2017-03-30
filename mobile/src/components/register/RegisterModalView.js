@@ -3,14 +3,15 @@ import {connect} from 'react-redux';
 import {Image, Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import RegisterActions from './RegisterActions';
 
-const mapStateToProps = ({register}) => {
-
+const mapStateToProps = ({register, notifications}) => {
+	const {token} = notifications;
 	return {
 		id: register.id,
 		fullName: register.fullName,
 		phone: register.phone,
 		showModal: register.showModal,
-		showError: register.showError
+		showError: register.showError,
+		token
 	}
 };
 
@@ -24,7 +25,7 @@ const mapActionsToProps = (dispatch) => {
 class RegisterModalView extends Component {
 
 	render() {
-		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError, show} = this.props;
+		let {id, fullName, phone, showModal, onInputChange, onRegisterPress, showError, show, token} = this.props;
 		if (showError) {
 			Alert.alert('הרשמה נכשלה', 'נא לבדוק את הפרטים שהכנסת');
 		}
@@ -61,8 +62,9 @@ class RegisterModalView extends Component {
 							onChangeText={phone => onInputChange({phone})}/>
 						<View style={styles.buttonWrapper}>
 							<Button
-								onPress={() => {onRegisterPress({id, phone, fullName});}}
+								onPress={() => {onRegisterPress({id, phone, fullName, token});}}
 								title='הרשמה'
+								disabled={token ?  false : true}
 								color={registerButtonColor}/>
 						</View>
 					</ScrollView>
