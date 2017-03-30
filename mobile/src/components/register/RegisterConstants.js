@@ -11,3 +11,5 @@ export const registerStatuses = {
 export const registerActionType = {
     INPUT_CHANGE: 'INPUT_CHANGE'
 };
+
+export const asyncStorageKey = 'moni-tor-app-user';

@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Image, View, Text, StyleSheet, Button, PushNotificationIOS, Alert} from 'react-native';
-import RegisterModelView from '../register/RegisterModalView';
+import RegisterModelView from '../register/RegisterView';
 import HomeActions from './HomeActions';
-import Notifications from '../notifications/Notifications';
-
+import AppLogo from '../AppLogo/AppLogo';
 
 const mapStateToProps = ({home}) => {
 
@@ -38,9 +37,8 @@ class HomeScreen extends Component {
 		let registerButtonColor = hasRegisteredBefore ? registeredBeforeButtonColor : notRegisteredBeforeButtonColor;
 		return (
 			<View style={styles.container}>
-				<Notifications />
 				<Image style={styles.bg} source={require('../register/bg.jpg')} />
-				<RegisterModelView/>
+				<AppLogo style={{marginBottom: 50}}/>
 				<View>
 					<Text>{`היי ${fullName}`}</Text>
 					<Text>{`כרגע ${availability} מקומות פנויים`}</Text>
