@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Image, Modal, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
+import {Image, Modal, BackAndroid, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import RegisterActions from './RegisterActions';
 
 const mapStateToProps = ({register, notifications}) => {
@@ -34,7 +34,8 @@ class RegisterModalView extends Component {
 				<Modal
 					animationType={'slide'}
 					transparent={false}
-					visible={showModal}>
+					visible={showModal}
+					onRequestClose={() => {BackAndroid.exitApp()}}>
 					<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
 						<View style={{flex: 1, flexDirection: 'row-reverse'}}>
 							<Text style={styles.registerLabel}>{'מוני'}</Text>
