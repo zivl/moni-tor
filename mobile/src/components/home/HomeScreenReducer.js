@@ -20,6 +20,12 @@ export default (state = initialData, action) => {
 				isSeatAvailable: action.isAvailable,
 			}
 		}
+		case HomeConstants.SET_USER: {
+			return {
+				...state,
+				user: action.user
+			}
+		}
 		case HomeConstants.SEAT_RESERVED: {
 			return {
 				...state,

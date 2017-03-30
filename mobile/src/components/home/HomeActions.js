@@ -4,6 +4,9 @@ import {baseUrl} from '../../config/Config'
 const contentType = 'application/json';
 
 export default HomeActions = Object.freeze({
+	setUserDetails(dispatch, {user}){
+		dispatch({type: HomeConstants.SET_USER, user})
+	},
 
 	fetchAvailableSeats(dispatch){
 

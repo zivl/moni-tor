@@ -3,7 +3,9 @@
  */
 
 import {AsyncStorage} from 'react-native';
-import {registerStatuses, registerActionType} from './RegisterConstants.js';
+import {registerStatuses, registerActionType, asyncStorageKey} from './RegisterConstants.js';
+import HomeActions from '../home/HomeActions';
+import {screens, actions as screenChooserActions} from '../../ScreenChooserConstants';
 import {baseUrl} from '../../config/Config'
 const contentType = 'application/json';
 
@@ -18,7 +20,7 @@ const registerActions = Object.freeze({
         if(isDataValid(userData)) {
         	try {
 				
-				await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
+				await AsyncStorage.setItem(asyncStorageKey, JSON.stringify(userData));
 				fetch(baseUrl + '/queue', {
 					method: 'post',
 					headers: {
@@ -28,6 +30,8 @@ const registerActions = Object.freeze({
 					body: JSON.stringify(userData)
 				}).then(()=>{
 					dispatch({type: registerStatuses.REGISTER, userData});
+					HomeActions.setUserDetails(dispatch, {user: userData});
+					dispatch({type: screenChooserActions.SET_SCREEN, screen: screens.HOME_SCREEN});
 				})
 
 				
