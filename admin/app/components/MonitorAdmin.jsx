@@ -29,7 +29,17 @@ class MonitorAdmin extends Component {
 
 	addPatient(data) {
 		this.props.addPatient(data);
-		this.setState({showModal : false});
+		this.closeModal();
+	}
+
+	closeModal() {
+		this.setState({showModal: false});
+		interval = setInterval(this.props.fetchQueue,10000);
+	}
+
+	openModal() {
+		this.setState({showModal: true});
+		clearInterval(interval);
 	}
 
 	render() {
@@ -38,7 +48,7 @@ class MonitorAdmin extends Component {
 				<div className='content'>
 					<div className='logo'>MONITOR</div>
 					<div className='main-actions'>
-						<button className='add-patient-button' onClick={() => this.setState({showModal: true})} >+</button>
+						<button className='add-patient-button' onClick={() => this.openModal()} >+</button>
 						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>&#128276;&nbsp;&nbsp; זמן את הבאה בתור</button>
 						<div className='date'>{this.state.date.toDateString()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div>
 					</div>
@@ -73,9 +83,9 @@ const ListItem = (props) => {
 	let regDate = new Date(registrationTime);
 	var diff =  calcTimeDiff(regDate);
 	let timeClass = '';
-	if ((diff >= 2) && (!notificationTime)) { //60min
+	if ((diff >= 60) && (!notificationTime)) { //60min
 		timeClass = 'red';
-	} else if ((diff >= 1) && (!notificationTime)) {//30min
+	} else if ((diff >= 30) && (!notificationTime)) {//30min
 		timeClass = 'orange';
 	}
 	return(<li className='row'>
