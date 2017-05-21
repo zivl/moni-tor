@@ -9,17 +9,17 @@ import {screens, actions as screenChooserActions} from '../../ScreenChooserConst
 import {baseUrl} from '../../config/Config'
 const contentType = 'application/json';
 
-function isDataValid(user){
-    return user.id && user.phone && user.fullName;
+function isDataValid(user) {
+	return user.id && user.phone && user.fullName;
 }
 
 const registerActions = Object.freeze({
 
     async registerNewUser(dispatch, {userData}){
-		
+
         if(isDataValid(userData)) {
         	try {
-				
+
 				await AsyncStorage.setItem(asyncStorageKey, JSON.stringify(userData));
 				fetch(baseUrl + '/queue', {
 					method: 'post',
@@ -34,21 +34,22 @@ const registerActions = Object.freeze({
 					dispatch({type: screenChooserActions.SET_SCREEN, screen: screens.HOME_SCREEN});
 				})
 
-				
+
 			}
-			catch (e){
-				console.log("Could not register user. Please try again", e);
+			catch (e) {
+				// console.log("Could not register user. Please try again", e);
+				dispatch({type: registerStatuses.REGISTER_FAILED});
 			}
 		}
 		else {
-            console.log('not valid');
+			// console.log('not valid');
 			dispatch({type: registerStatuses.REGISTER_FAILED});
-        }
-    },
+		}
+	},
 
-    inputChange(dispatch, {deltaData}){
-      dispatch({type: registerActionType.INPUT_CHANGE, deltaData});
-    }
+	inputChange(dispatch, {deltaData}){
+		dispatch({type: registerActionType.INPUT_CHANGE, deltaData});
+	}
 });
 
 export default registerActions;

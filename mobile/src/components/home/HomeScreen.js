@@ -24,11 +24,9 @@ const mapActionsToProps = (dispatch) => {
 class HomeScreen extends Component {
 
 	componentWillReceiveProps() {
-		Alert.alert('componentWillReceiveProps');
 	}
 
 	componentWillUpdate(){
-		Alert.alert('componentWillUpdate');
 	}
 
 	render() {

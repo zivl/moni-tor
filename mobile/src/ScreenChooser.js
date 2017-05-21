@@ -53,7 +53,7 @@ class ScreenChooser extends Component {
             case screens.HOME_SCREEN:
                 return <HomeScreen />;
             case screens.REGISTRATION:
-                return <RegisterView />
+                return <RegisterView />;
             default:
                 return <SplashScreen />;
         }
