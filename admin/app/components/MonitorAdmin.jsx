@@ -2,16 +2,6 @@ import React, {Component} from 'react';
 
 var interval;
 
-function calcTimeDiff(date1) {
-	const date1Ms = date1.getTime();
-	const date2Ms = (new Date()).getTime();
-
-	let differenceMs = date2Ms - date1Ms;
-	differenceMs = differenceMs/1000;
-	differenceMs = differenceMs/60;
-	const minutes = Math.floor(differenceMs);
-	return minutes;
-}
 class MonitorAdmin extends Component {
 	state = {
 		showModal: false,
@@ -21,10 +11,15 @@ class MonitorAdmin extends Component {
 	componentDidMount() {
 		this.props.fetchQueue();
 		this.setState({date: new Date()});
-		interval = setInterval(this.props.fetchQueue,10000);
+		interval = setInterval(()=>this.fetchQueue(),10000);
 	}
 	componentWillUnmount() {
 		clearInterval(interval);
+	}
+
+	fetchQueue() {
+		this.props.fetchQueue();
+		this.setState({date: new Date()});
 	}
 
 	addPatient(data) {
@@ -47,9 +42,12 @@ class MonitorAdmin extends Component {
 				<div className='content'>
 					<div className='logo'></div>
 					<div className='main-actions'>
-						<button className='add-patient-button' onClick={() => this.openModal()} >+</button>
+						<div className='tooltip-button'>
+							<button className='add-patient-button' onClick={() => this.openModal()} >+</button>
+							<div className='tooltip'>הוסף מטופלת</div>
+						</div>
 						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>&#128276;&nbsp;&nbsp; זמן את הבאה בתור</button>
-						<div className='date'>{this.state.date.toDateString()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div>
+						<div className='date'>{this.state.date.getDate() + '.' + (this.state.date.getMonth() + 1) + '.' + this.state.date.getFullYear()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div>
 					</div>
 					<List {...this.props} ></List>
 				</div>
@@ -67,24 +65,26 @@ class AddPatient extends Component  {
 	render(){
 		let {fullName, id, phone} = this.props;
 		return (<div className='modal'>
-			<div className='field'><label>שם המטופלת</label><input type='text' id='fullName' name='fullName' value={fullName} onChange={(e) => this.props.updatePatientData({fullName: e.target.value})}/></div>
-			<div className='field'><label>ת.ז.</label><input type='text' id='name' name='id' value={id}  onChange={(e) => this.props.updatePatientData({id: e.target.value})} /></div>
-			<div className='field'><label>מספר טלפון</label><input type='text' id='phone' name='phone' value={phone}  onChange={(e) => this.props.updatePatientData({phone: e.target.value})}/></div>
-			<div className='main-actions'>
-				<button className='modal-button cancel' onClick={this.props.closeModal} >ביטול</button>
-				<button className='modal-button' onClick={()=>this.props.addPatient({fullName, id, phone})} disabled={!this.props.addEnabled}>אישור</button>
+			<div className='modal-content'>
+				<div className='field'><label>שם המטופלת</label><input type='text' id='fullName' name='fullName' value={fullName} onChange={(e) => this.props.updatePatientData({fullName: e.target.value})}/></div>
+				<div className='field'><label>ת.ז.</label><input type='text' id='name' name='id' value={id}  onChange={(e) => this.props.updatePatientData({id: e.target.value})} /></div>
+				<div className='field'><label>מספר טלפון</label><input type='text' id='phone' name='phone' value={phone}  onChange={(e) => this.props.updatePatientData({phone: e.target.value})}/></div>
+			</div>
+			<div className='modal-buttons'>
+				<div className='main-actions'>
+					<button className='modal-button cancel' onClick={this.props.closeModal} >ביטול</button>
+					<button className='modal-button' onClick={()=>this.props.addPatient({fullName, id, phone})} disabled={!this.props.addEnabled}>אישור</button>
+				</div>
 			</div>
 		</div>);
 	}
 }
 const ListItem = (props) => {
-	const {itemData : {fullName, id, phone, registrationTime, notificationTime, token}} = props;
-	let regDate = new Date(registrationTime);
-	var diff =  calcTimeDiff(regDate);
+	const {itemData : {fullName, id, phone, registrationTime, notificationTime, token, diffMin}} = props;
 	let timeClass = '';
-	if ((diff >= 60) && (!notificationTime)) { //60min
+	if ((diffMin >= 60) && (!notificationTime)) { //60min
 		timeClass = 'red';
-	} else if ((diff >= 30) && (!notificationTime)) {//30min
+	} else if ((diffMin >= 30) && (!notificationTime)) {//30min
 		timeClass = 'orange';
 	}
 	return(<li className='row'>
