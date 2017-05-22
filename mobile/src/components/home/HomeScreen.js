@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Image, View, Text, StyleSheet, Button, PushNotificationIOS, Alert} from 'react-native';
-import RegisterModelView from '../register/RegisterView';
+import {View, Text, StyleSheet, Button, PushNotificationIOS, Alert} from 'react-native';
 import HomeActions from './HomeActions';
 import AppLogo from '../AppLogo/AppLogo';
 
@@ -35,7 +34,6 @@ class HomeScreen extends Component {
 		let registerButtonColor = hasRegisteredBefore ? registeredBeforeButtonColor : notRegisteredBeforeButtonColor;
 		return (
 			<View style={styles.container}>
-				<Image style={styles.bg} source={require('../register/bg.jpg')} />
 				<AppLogo style={{marginBottom: 50}}/>
 				<View>
 					<Text>{`היי ${fullName}`}</Text>
@@ -60,15 +58,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-	bg: {
-		position: 'absolute',
-		top: 0,
-		bottom: 0,
-		left: 0,
-		right: 0,
-		resizeMode: 'stretch',
-	}
+    }
 });
 
 const notRegisteredBeforeButtonColor = 'crimson';
