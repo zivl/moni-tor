@@ -16,7 +16,7 @@ const mapStateToProps = ({home}) => {
 const mapActionsToProps = (dispatch) => {
 
     return {
-        onSeatReservation: () => HomeActions.reserveSeat(dispatch)
+        onSeatReservation: user => HomeActions.reserveSeat(dispatch, user)
     }
 };
 
@@ -29,19 +29,19 @@ class HomeScreen extends Component {
 	}
 
 	render() {
-		let {user: {fullName}, isSeatAvailable, hasRegisteredBefore, onSeatReservation} = this.props;
+		let {user, isSeatAvailable, hasRegisteredBefore, onSeatReservation} = this.props;
 		let availability = isSeatAvailable ? 'יש' : 'אין';
 		let registerButtonColor = hasRegisteredBefore ? registeredBeforeButtonColor : notRegisteredBeforeButtonColor;
 		return (
 			<View style={styles.container}>
 				<AppLogo style={{marginBottom: 50}}/>
 				<View>
-					<Text>{`היי ${fullName}`}</Text>
+					<Text>{`היי ${user.fullName}`}</Text>
 					<Text>{`כרגע ${availability} מקומות פנויים`}</Text>
 				</View>
 				<View>
 					<Button
-						onPress={() => onSeatReservation()}
+						onPress={() => onSeatReservation(user)}
 						title='שרייני מקום'
 						color={registerButtonColor}/>
 				</View>

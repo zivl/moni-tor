@@ -19,7 +19,9 @@ const mapActionsToProps = (dispatch) => {
 class Notifications extends Component {
 
 	componentDidMount() {
-		FCM.requestPermissions(); // for iOS
+		if (Platform.OS === 'ios') {
+			FCM.requestPermissions(); // for iOS
+		}
 		FCM.getFCMToken().then(token => {
 			console.log('token from FCM', token);
 			this.props.onTokenReceived(token);
@@ -39,8 +41,8 @@ class Notifications extends Component {
 					sound: "default",                                   // as FCM payload
 					priority: "high",                                   // as FCM payload
 					click_action: "ACTION",                             // as FCM payload
-					badge: 10,                                          // as FCM payload IOS only, set 0 to clear badges
-					number: 10,                                         // Android only
+					badge: 1,                                          // as FCM payload IOS only, set 0 to clear badges
+					number: 1,                                         // Android only
 					ticker: "My Notification Ticker",                   // Android only
 					auto_cancel: true,                                  // Android only (default true)
 					large_icon: "ic_launcher",                           // Android only
@@ -93,7 +95,7 @@ class Notifications extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={{width:0}}>
 				<Text></Text>
 			</View>
 		)

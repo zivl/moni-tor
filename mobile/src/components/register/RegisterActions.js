@@ -6,8 +6,7 @@ import {AsyncStorage} from 'react-native';
 import {registerStatuses, registerActionType, asyncStorageKey} from './RegisterConstants.js';
 import HomeActions from '../home/HomeActions';
 import {screens, actions as screenChooserActions} from '../../ScreenChooserConstants';
-import {baseUrl} from '../../config/Config'
-const contentType = 'application/json';
+import {baseUrl, headers} from '../../config/Config'
 
 function isDataValid(user) {
 	return user.id && user.phone && user.fullName;
@@ -23,10 +22,7 @@ const registerActions = Object.freeze({
 				await AsyncStorage.setItem(asyncStorageKey, JSON.stringify(userData));
 				fetch(baseUrl + '/queue', {
 					method: 'post',
-					headers: {
-						'Accept': contentType,
-						'Content-Type': contentType
-					},
+					headers: headers,
 					body: JSON.stringify(userData)
 				}).then(()=>{
 					dispatch({type: registerStatuses.REGISTER, userData});
@@ -37,12 +33,11 @@ const registerActions = Object.freeze({
 
 			}
 			catch (e) {
-				// console.log("Could not register user. Please try again", e);
 				dispatch({type: registerStatuses.REGISTER_FAILED});
 			}
 		}
+
 		else {
-			// console.log('not valid');
 			dispatch({type: registerStatuses.REGISTER_FAILED});
 		}
 	},

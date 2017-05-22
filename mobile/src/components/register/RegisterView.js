@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Image, BackAndroid, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
+import {BackAndroid, Text, TouchableHighlight, View, TextInput, StyleSheet, Button, Alert, ScrollView} from 'react-native';
 import RegisterActions from './RegisterActions';
 import AppLogo from '../AppLogo/AppLogo';
 
@@ -17,7 +17,7 @@ const mapStateToProps = ({register, notifications}) => {
 
 const mapActionsToProps = (dispatch) => {
 	return {
-		onRegisterPress: userData =>RegisterActions.registerNewUser(dispatch, {userData}),
+		onRegisterPress: userData => RegisterActions.registerNewUser(dispatch, {userData}),
 		onInputChange: deltaData => RegisterActions.inputChange(dispatch, {deltaData})
 	}
 };
@@ -32,7 +32,7 @@ class RegisterView extends Component {
 		return (
 			<View style={{marginTop: 22, flex: 1}}>
 				<ScrollView style={styles.modalContent} keyboardDismissMode={'interactive'}>
-					<AppLogo style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} />
+					<AppLogo style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}/>
 					<TextInput
 						style={styles.textInput}
 						placeholder={'שם מלא'}
@@ -57,7 +57,7 @@ class RegisterView extends Component {
 						<Button
 							onPress={() => {onRegisterPress({id, phone, fullName, token});}}
 							title='הרשמה'
-							disabled={token ?  false : true}
+							disabled={token ? false : true}
 							color={registerButtonColor}/>
 					</View>
 				</ScrollView>
