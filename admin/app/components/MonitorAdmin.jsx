@@ -43,10 +43,10 @@ class MonitorAdmin extends Component {
 					<div className='logo'></div>
 					<div className='main-actions'>
 						<div className='tooltip-button'>
-							<button className='add-patient-button' onClick={() => this.openModal()} >+</button>
-							<div className='tooltip'>הוסף מטופלת</div>
+							<button className='add-patient-button' onClick={() => this.openModal()} />
+							<div className='tooltip'>הוסיפי מטופלת</div>
 						</div>
-						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>&#128276;&nbsp;&nbsp; זמן את הבאה בתור</button>
+						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>זמני את הבאה בתור</button>
 						<div className='date'>{this.state.date.getDate() + '.' + (this.state.date.getMonth() + 1) + '.' + this.state.date.getFullYear()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div>
 					</div>
 					<List {...this.props} />
@@ -112,8 +112,8 @@ const ListItem = (props) => {
 		{token && <div className={timeClass + ' small-col align'}>{notificationTime ? 'הזמנה נשלחה' : 'ממתינה'}</div>}
 		{!token && <div className={timeClass + ' small-col align'}>{notificationTime ? 'נא ליצור קשר' : 'ממתינה'}</div>}
 		<div className='huge-col flex-col'>
-			<div className='action remove'  onClick={()=>props.removeFromQueue(id)} >X הסרה מהרשימה</div>
-			{notificationTime ?  <div className='action arrived'  onClick={()=>props.removeFromQueue(id)} > &#10003; המטופלת הגיעה</div> : <div className='action top' onClick={()=>props.moveTopQueue(id)}>! הקפצה לראש הרשימה</div> }
+			<div className='action remove'  onClick={()=>props.removeFromQueue(id)} >הסירי מהרשימה</div>
+			{notificationTime ?  <div className='action arrived'  onClick={()=>props.removeFromQueue(id)} > &#10003; אשרי הגעת המטופלת</div> : <div className='action top' onClick={()=>props.moveTopQueue(id)}> הקפיצי לראש הרשימה</div> }
 
 		</div>
 	</li>);
