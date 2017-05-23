@@ -97,6 +97,21 @@ app.post('/queue', function(request, response) {
 	requestMonitor(newRequest);
 	response.json(newRequest);
 });
+
+/*
+check if user exists in queue
+*/
+app.post('/queue/check', function(request, response) {
+    let  userData = request.body;
+    
+    if (getFromQueueByID(userData.id) !== null) {
+		response.status(405).send({ exists: true });
+        return
+	};
+    
+    response.send({exist: false});
+});
+
 /*
  Clears the entire queue and all timers.
  */
