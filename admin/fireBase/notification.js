@@ -10,7 +10,7 @@ admin.initializeApp({
     // This registration token comes from the client FCM SDKs.
 //var registrationToken = "fmH08v1XQOo:APA91bH1ZmAQEsKQGlw9gKWwZ_Ryrr1ZCFlkbIOI7VPuaoTbA5tzSVM5RwyZRFKpkDZfjs-5tn_cNQHXWAQyNMmdwI8MkTGZOmkOJCXjjcq_BWRKsag80_wAFR9HbQll_aNRLSTB4-7n";
 
-function sendNotification(token) {
+function sendNotification(token, removedFromQueue) {
 
     //var token = 'fmH08v1XQOo:APA91bH1ZmAQEsKQGlw9gKWwZ_Ryrr1ZCFlkbIOI7VPuaoTbA5tzSVM5RwyZRFKpkDZfjs-5tn_cNQHXWAQyNMmdwI8MkTGZOmkOJCXjjcq_BWRKsag80_wAFR9HbQll_aNRLSTB4-7n';
 
@@ -20,7 +20,8 @@ function sendNotification(token) {
     data: {
         title: "MONI-TOR",
         msg: "It's time to go to monitor",
-        sub_text: ""
+        sub_text: "",
+        removedFromQueue: removedFromQueue ? 'true' : 'false'
     }
     };
 

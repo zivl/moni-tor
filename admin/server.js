@@ -234,6 +234,8 @@ function deleteUser(id) {
 	//}
 	for (index in queue) {
 		if (queue[index].id === id) {
+            let user = queue[index];
+            sendNotification(user.token, true);
 			queue.splice(index,1);
 			break;
 		}
