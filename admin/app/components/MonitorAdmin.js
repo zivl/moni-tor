@@ -10,14 +10,18 @@ function calcTimeDiff(date1) {
 	let differenceMs = date2Ms - date1Ms;
 	differenceMs = differenceMs/1000;
 	differenceMs = differenceMs/60;
-	const minutes = Math.floor(differenceMs);
-	return minutes;
+	return Math.floor(differenceMs);
 }
+
+const validationMessages = {
+	phone : 'מספר טלפון לא חוקי. יש להשתמש בספרות בלבד'	,
+	id : 'מספר ת.ז. חייב להיות בן 9 ספרות'
+};
 
 export const mapStateToProps = ({monitorAdmin : {data, patient}}) => {
 	let allowCreateNew = false;
 	let isListEmpty = false;
-	if (patient && patient.id && patient.fullName && patient.phone) {
+	if (patient && patient.id && patient.fullName && patient.phone && patient.errors && Object.getOwnPropertyNames(patient.errors).length  === 0) {
 		allowCreateNew = true;
 	}
 	if (data && data.length === 0) {
@@ -29,6 +33,15 @@ export const mapStateToProps = ({monitorAdmin : {data, patient}}) => {
 			let regDate = new Date(data[i].registrationTime);
 			data[i].diffMin = calcTimeDiff(regDate);
 		}
+	}
+	let errorText = [];
+	if (patient && patient.errors) {
+		for (let error in patient.errors) {
+			if (patient.hasOwnProperty(error)) {
+				errorText[errorText.length] = validationMessages[error];
+			}
+		}
+		patient.errorText = errorText;
 	}
 
 

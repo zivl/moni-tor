@@ -6,7 +6,7 @@ class MonitorAdmin extends Component {
 	state = {
 		showModal: false,
 		date: new Date()
-	}
+	};
 
 	componentDidMount() {
 		this.props.fetchQueue();
@@ -49,7 +49,7 @@ class MonitorAdmin extends Component {
 						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>&#128276;&nbsp;&nbsp; זמן את הבאה בתור</button>
 						<div className='date'>{this.state.date.getDate() + '.' + (this.state.date.getMonth() + 1) + '.' + this.state.date.getFullYear()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div>
 					</div>
-					<List {...this.props} ></List>
+					<List {...this.props} />
 				</div>
 				{this.state.showModal && <div className='modal-bg'>	</div>}
 				{this.state.showModal && <AddPatient {...this.props.patient} addEnabled={this.props.allowCreateNew}
@@ -63,12 +63,29 @@ class MonitorAdmin extends Component {
 
 class AddPatient extends Component  {
 	render(){
-		let {fullName, id, phone} = this.props;
+		let {fullName, id, phone, errorText} = this.props;
 		return (<div className='modal'>
+			<div className='modal-header'>
+				<h1 className='modal-header-text'>הוספת מטופלת</h1>
+			</div>
 			<div className='modal-content'>
-				<div className='field'><label>שם המטופלת</label><input type='text' id='fullName' name='fullName' value={fullName} onChange={(e) => this.props.updatePatientData({fullName: e.target.value})}/></div>
-				<div className='field'><label>ת.ז.</label><input type='text' id='name' name='id' value={id}  onChange={(e) => this.props.updatePatientData({id: e.target.value})} /></div>
-				<div className='field'><label>מספר טלפון</label><input type='text' id='phone' name='phone' value={phone}  onChange={(e) => this.props.updatePatientData({phone: e.target.value})}/></div>
+				<div className='errors-area'>
+				{errorText.map((text) => <div className='error' key={text}>{text}</div>)}
+				</div>
+				<div className='fields'>
+					<div className='field'>
+						<label>שם המטופלת</label>
+						<input type='text' id='fullName' name='fullName' value={fullName} onChange={(e) => this.props.updatePatientData({fullName: e.target.value})}/>
+					</div>
+					<div className='field'>
+						<label>ת.ז.</label>
+						<input type='text' maxLength='9' id='name' name='id' value={id}  onChange={(e) => this.props.updatePatientData({id: e.target.value})} />
+					</div>
+					<div className='field'>
+						<label>מספר טלפון</label>
+						<input type='text' id='phone' name='phone' value={phone}  onChange={(e) => this.props.updatePatientData({phone: e.target.value})}/>
+					</div>
+				</div>
 			</div>
 			<div className='modal-buttons'>
 				<div className='main-actions'>
@@ -100,9 +117,9 @@ const ListItem = (props) => {
 
 		</div>
 	</li>);
-}
+};
 
-const ListItemHeader = (props) => {
+const ListItemHeader = () => {
 	return(<li key='header-key' className='row header'>
 		<div className='col-title big-col'>שם המטופלת</div>
 		<div className='col-title big-col'>תעודת זהות</div>
@@ -111,7 +128,7 @@ const ListItemHeader = (props) => {
 		<div className='col-title small-col'>סטטוס</div>
 		<div className='col-title huge-col'>פעולות</div>
 	</li>);
-}
+};
 
 const List = (props) => {
 	const actions = {invitePatient: props.invitePatient, removeFromQueue: props.removeFromQueue,  moveTopQueue: props.moveTopQueue};
@@ -120,6 +137,6 @@ const List = (props) => {
 		{props.isListEmpty && <li className='row empty'>רשימת ההמתנה ריקה</li>}
 		{props.data && props.data.map(entry => <ListItem itemData={entry} key={entry.id} {...actions} />)}
 	</ul>);
-}
+};
 
 export default MonitorAdmin;
