@@ -281,7 +281,7 @@ function timeOutDelete(id) {
 Get the user from the queue by ID
  */
 function getFromQueueByID(id) {
-   for (index in queue) {
+   for (let index in queue) {
       if (queue[index].id === id) {
          return queue[index];
       }
