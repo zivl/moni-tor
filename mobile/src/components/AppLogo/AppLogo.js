@@ -6,7 +6,7 @@ export default class AppLogo extends Component {
         let style = this.props.style ? this.props.style : {}
         return ( 
             <View style={style}>
-                <Image source={require('../../resources/images/LOGO.png')} />
+                <Image source={require('../../resources/images/monitor-logo.png')} />
             </View>
         )
     }
