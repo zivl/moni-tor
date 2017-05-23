@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, AsyncStorage, View, StyleSheet} from 'react-native';
+import {Image, AsyncStorage, View, Dimensions} from 'react-native';
 import {connect} from 'react-redux';
 
 import {screens, actions} from './ScreenChooserConstants';
@@ -61,25 +61,14 @@ class ScreenChooser extends Component {
 	}
 
 	render() {
+		let {height, width} = Dimensions.get('window');
 		return (
-			<View style={{flex: 1}}>
-				<Image style={styles.bg} source={require('./resources/images/bg.jpg')}/>
+			<Image style={{height, width}} source={require('./resources/images/bg.jpg')}>
 				<Notifications />
 				{this.renderScreenByProps()}
-			</View>
+			</Image>
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	bg: {
-		position: 'absolute',
-		top: 0,
-		bottom: 0,
-		left: 0,
-		right: 0,
-		resizeMode: 'stretch',
-	}
-});
 
 export default connect(mapStateToProps, mapActionsToProps)(ScreenChooser);
