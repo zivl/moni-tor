@@ -34,6 +34,20 @@ export default HomeActions = Object.freeze({
 				dispatch({type: HomeConstants.ALLREADY_REGISTRED})
 			}
 		});
+	},
+
+	async checkQueue(dispatch, user) {
+		fetch(baseUrl + '/queue/check', {
+			method: 'post',
+			headers: headers,
+			body: JSON.stringify(user)
+		}).then(response => {
+			if (!response.ok) {
+				dispatch({
+					type: HomeConstants.ALLREADY_REGISTRED
+				})
+			}
+		});
 	}
 
 });

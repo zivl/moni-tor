@@ -26,7 +26,8 @@ const mapStateToProps = ({home}) => {
 const mapActionsToProps = (dispatch) => {
 
     return {
-        onSeatReservation: user => HomeActions.reserveSeat(dispatch, user)
+        onSeatReservation: user => HomeActions.reserveSeat(dispatch, user),
+		checkQueue: user => HomeActions.checkQueue(dispatch, user)
     }
 };
 
@@ -34,6 +35,10 @@ class HomeScreen extends Component {
 
 	componentWillReceiveProps() {
 
+	}
+
+	componentDidMount() {
+		this.props.checkQueue(this.props.user);
 	}
 
 	componentWillUpdate(){
