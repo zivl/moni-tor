@@ -26,7 +26,14 @@ export default HomeActions = Object.freeze({
 			method: 'post',
 			headers: headers,
 			body: JSON.stringify(user)
-		}).then(response => dispatch({type: HomeConstants.SEAT_RESERVED, hasBeenRegistered: response.ok}));
+		}).then(response => {
+			console.log(response);
+			if (response.ok) {
+				dispatch({type: HomeConstants.SEAT_RESERVED, hasBeenRegistered: response.ok})
+			}else {
+				dispatch({type: HomeConstants.ALLREADY_REGISTRED})
+			}
+		});
 	}
 
 });

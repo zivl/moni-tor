@@ -19,18 +19,11 @@ const registerActions = Object.freeze({
         if(isDataValid(userData)) {
         	try {
 
-				await AsyncStorage.setItem(asyncStorageKey, JSON.stringify(userData));
-				fetch(baseUrl + '/queue', {
-					method: 'post',
-					headers: headers,
-					body: JSON.stringify(userData)
-				}).then(()=>{
-					dispatch({type: registerStatuses.REGISTER, userData});
-					HomeActions.setUserDetails(dispatch, {user: userData});
-					dispatch({type: screenChooserActions.SET_SCREEN, screen: screens.HOME_SCREEN});
-				})
-
-
+				await AsyncStorage.setItem(asyncStorageKey, JSON.stringify(userData));				
+				dispatch({type: registerStatuses.REGISTER, userData});
+				HomeActions.setUserDetails(dispatch, {user: userData});
+				dispatch({type: screenChooserActions.SET_SCREEN, screen: screens.HOME_SCREEN});
+				
 			}
 			catch (e) {
 				dispatch({type: registerStatuses.REGISTER_FAILED});

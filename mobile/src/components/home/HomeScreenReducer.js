@@ -8,7 +8,8 @@ let initialData = {
 		phone: '0545454545'
 	},
 	hasBeenRegistered: false,
-	gotPushNotification: false
+	gotPushNotification: false,
+	allreadyRegistred: false
 };
 
 export default (state = initialData, action) => {
@@ -32,6 +33,21 @@ export default (state = initialData, action) => {
 				hasBeenRegistered: action.hasBeenRegistered
 			}
 		}
+
+		case HomeConstants.REMOVED_FROM_QUEUE: {
+			return {
+				...state,
+				hasBeenRegistered: false,
+				allreadyRegistred: false
+			}
+		}
+
+		case HomeConstants.ALLREADY_REGISTRED: {
+			return {
+				...state,
+				allreadyRegistred: true	
+			}
+		}		
 	}
 
 	return state;
