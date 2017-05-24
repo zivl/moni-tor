@@ -91,7 +91,7 @@ class AddPatient extends Component  {
 			<div className='modal-buttons'>
 				<div className='modal-main-actions'>
 					<button className='modal-button cancel' onClick={this.props.closeModal} >ביטול</button>
-					<button className='modal-button' onClick={()=>this.props.addPatient({fullName, id, phone})} disabled={!this.props.addEnabled}>אישור</button>
+					<button className='modal-button' onClick={()=>this.props.addPatient({fullName, id, phone})} disabled={!this.props.addEnabled}>הוספה</button>
 				</div>
 			</div>
 		</div>);
