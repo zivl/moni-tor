@@ -39,15 +39,16 @@ class MonitorAdmin extends Component {
 	render() {
 		return (
 			<div>
-				<div className='content'>
+				<div className='logo-container'>
 					<div className='logo'></div>
+					<div className='date'>{this.state.date.getDate() + '.' + (this.state.date.getMonth() + 1) + '.' + this.state.date.getFullYear()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div></div>
+				<div className='content'>
 					<div className='main-actions'>
 						<div className='tooltip-button'>
 							<button className='add-patient-button' onClick={() => this.openModal()} />
 							<div className='tooltip'>הוסיפי מטופלת</div>
 						</div>
 						<button disabled={this.props.isListEmpty} onClick={this.props.invitePatient} className='summon-button'>זמני את הבאה בתור</button>
-						<div className='date'>{this.state.date.getDate() + '.' + (this.state.date.getMonth() + 1) + '.' + this.state.date.getFullYear()}<span className='sproket'> | </span>{this.state.date.toTimeString().substring(0,5)}</div>
 					</div>
 					<List {...this.props} />
 				</div>
@@ -113,7 +114,7 @@ const ListItem = (props) => {
 		{!token && <div className={timeClass + ' small-col align'}>{notificationTime ? 'נא ליצור קשר' : 'ממתינה'}</div>}
 		<div className='huge-col flex-col'>
 			<div className='action remove'  onClick={()=>props.removeFromQueue(id)} >הסירי מהרשימה</div>
-			{notificationTime ?  <div className='action arrived'  onClick={()=>props.removeFromQueue(id)} > &#10003; אשרי הגעת המטופלת</div> : <div className='action top' onClick={()=>props.moveTopQueue(id)}> הקפיצי לראש הרשימה</div> }
+			{notificationTime ?  <div className='action arrived'  onClick={()=>props.removeFromQueue(id)} >אשרי הגעת המטופלת</div> : <div className='action top' onClick={()=>props.moveTopQueue(id)}> הקפיצי לראש הרשימה</div> }
 
 		</div>
 	</li>);
