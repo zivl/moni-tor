@@ -9,7 +9,7 @@ let initialData = {
 	},
 	hasBeenRegistered: false,
 	gotPushNotification: false,
-	allreadyRegistred: false
+	alreadyRegistered: false
 };
 
 export default (state = initialData, action) => {
@@ -38,14 +38,14 @@ export default (state = initialData, action) => {
 			return {
 				...state,
 				hasBeenRegistered: false,
-				allreadyRegistred: false
+				alreadyRegistered: false
 			}
 		}
 
-		case HomeConstants.ALLREADY_REGISTRED: {
+		case HomeConstants.ALREADY_REGISTERED: {
 			return {
 				...state,
-				allreadyRegistred: true	
+				alreadyRegistered: true
 			}
 		}		
 	}

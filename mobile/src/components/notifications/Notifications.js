@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, Text, Platform} from 'react-native';
+import {View, Platform} from 'react-native';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import NotificationsActions from './NotificationsActions';
 import HomeConstants from '../home/HomeConstants.js';
@@ -12,7 +12,7 @@ const mapStateToProps = () => {
 const mapActionsToProps = (dispatch) => {
 
 	return {
-		onTokenReceived: (token) => NotificationsActions.tokenRecieved(dispatch, token),
+		onTokenReceived: (token) => NotificationsActions.tokenReceived(dispatch, token),
 		onDeletedFromQueue: () => {
 			dispatch({
 				type: HomeConstants.REMOVED_FROM_QUEUE
@@ -25,20 +25,21 @@ class Notifications extends Component {
 
 	componentDidMount() {
 		if (Platform.OS === 'ios') {
-			FCM.requestPermissions(); // for iOS
+			FCM.requestPermissions();
 		}
 		FCM.getFCMToken().then(token => {
-			console.log('token from FCM', token);
+			if(token === undefined){
+				setTimeout(() => FCM.getFCMToken().then(token => this.props.onTokenReceived(token)), 5000);
+			}
 			this.props.onTokenReceived(token);
 		});
 
 		this.notificationListener = FCM.on(FCMEvent.Notification, (notif) => {
 			// there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
-			console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@ notif @@@@@@@@@@@@@@@@@@@@@@@@@@');
-			console.log(JSON.stringify(notif));
-			console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@ notif @@@@@@@@@@@@@@@@@@@@@@@@@@');			
+
 			if (!notif.local_notification) {
 				if (notif.removedFromQueue === 'true') {
+					FCM.removeAllDeliveredNotifications();
 					this.props.onDeletedFromQueue();
 				} else {
 				//this is a local notification
@@ -70,6 +71,7 @@ class Notifications extends Component {
 			}
 			if (notif.opened_from_tray) {
 				//app is open/resumed because user clicked banner
+				FCM.removeAllDeliveredNotifications();
 			}
 			if (Platform.OS === 'ios') {
 				//optional
@@ -91,7 +93,7 @@ class Notifications extends Component {
 		});
 
 		this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
-			console.log(token);
+			console.log('token refreshed', token);
 			// fcm token may not be available on first load, catch it here
 		});
 	}
@@ -105,9 +107,7 @@ class Notifications extends Component {
 
 	render() {
 		return (
-			<View style={{width:0}}>
-				<Text></Text>
-			</View>
+			<View style={{width:0}}></View>
 		)
 	}
 }

@@ -1,4 +1,3 @@
-import {AsyncStorage} from 'react-native';
 import HomeConstants from './HomeConstants';
 import {baseUrl, headers} from '../../config/Config'
 
@@ -30,8 +29,8 @@ export default HomeActions = Object.freeze({
 			console.log(response);
 			if (response.ok) {
 				dispatch({type: HomeConstants.SEAT_RESERVED, hasBeenRegistered: response.ok})
-			}else {
-				dispatch({type: HomeConstants.ALLREADY_REGISTRED})
+			} else {
+				dispatch({type: HomeConstants.ALREADY_REGISTERED})
 			}
 		});
 	},
@@ -44,7 +43,7 @@ export default HomeActions = Object.freeze({
 		}).then(response => {
 			if (!response.ok) {
 				dispatch({
-					type: HomeConstants.ALLREADY_REGISTRED
+					type: HomeConstants.ALREADY_REGISTERED
 				})
 			}
 		});
