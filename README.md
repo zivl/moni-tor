@@ -1,2 +1,4 @@
-# moni-tor
-Pregnancy monitor queue scheduler specially designed for High-Risk Dept. at hospitals
+# moni-tor (מוני-תור)
+
+
+![Image of monitor] (promotion.jpeg)
